@@ -1,0 +1,146 @@
+```html
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>德尔堡 UPVC 门窗报价工具</title>
+  <style>
+    :root{--ink:#142235;--blue:#1457b8;--line:#dce5f0;--muted:#6c7b8e;--danger:#c23d3d}*{box-sizing:border-box}body{margin:0;background:#f3f6fa;color:var(--ink);font-family:"Microsoft YaHei",system-ui,sans-serif}.wrap{max-width:1450px;margin:auto;padding:28px 22px 48px}header{display:flex;gap:20px;align-items:flex-end;justify-content:space-between;margin-bottom:22px}h1{font-size:26px;margin:0 0 6px}header p{margin:0;color:var(--muted);font-size:14px}.card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:18px;box-shadow:0 4px 18px #24476a0a;margin-bottom:16px}.meta{display:grid;grid-template-columns:1.2fr 1fr 1fr 1.5fr;gap:13px}.field label{display:block;font-size:12px;color:var(--muted);margin:0 0 5px}input,select,button{font:inherit}input,select{width:100%;border:1px solid #cbd8e7;border-radius:7px;padding:8px 9px;background:#fff;color:var(--ink)}input:focus,select:focus{outline:2px solid #a8c8f6;border-color:var(--blue)}.toolbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}.toolbar h2{font-size:17px;margin:0}.actions{display:flex;gap:8px;flex-wrap:wrap}button{border:0;border-radius:7px;padding:9px 13px;cursor:pointer;background:var(--blue);color:#fff;font-weight:600}button.secondary{background:#e8eff8;color:#28517f}button.delete{background:transparent;color:var(--danger);padding:5px}.table-wrap{overflow:auto;border:1px solid var(--line);border-radius:10px}table{width:100%;border-collapse:collapse;min-width:1450px}th{background:#f4f7fb;color:#596b81;text-align:left;font-size:12px;font-weight:600;white-space:nowrap}th,td{padding:8px 7px;border-bottom:1px solid #e6edf5;vertical-align:middle}tbody tr:last-child td{border-bottom:0}td input,td select{padding:6px;font-size:13px;min-width:74px}td select{min-width:133px}.num{text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}.line-total{font-weight:700;color:var(--blue)}.summary{display:grid;grid-template-columns:1fr 360px;gap:18px;align-items:start}.notes h3{font-size:14px;margin:0 0 7px}.notes ul{margin:0;padding-left:20px;color:var(--muted);font-size:13px;line-height:1.8}.total{background:linear-gradient(135deg,#123f7c,#176bbd);color:white;border-radius:12px;padding:17px 20px}.total .label{opacity:.8;font-size:13px}.total .amount{font-size:32px;font-weight:700;margin:3px 0 13px}.total-row{display:flex;justify-content:space-between;font-size:13px;margin-top:6px;color:#dcecff}.footer-note{font-size:12px;color:var(--muted);margin-top:13px}
+    @media(max-width:800px){.wrap{padding:18px 12px}.meta,.summary{grid-template-columns:1fr}header,.toolbar{align-items:flex-start;flex-direction:column}.table-wrap{border:0;overflow:visible}.table-wrap table,.table-wrap tbody,.table-wrap tr,.table-wrap td{display:block;width:100%;min-width:0}.table-wrap thead{display:none}.table-wrap tr{border:1px solid var(--line);border-radius:10px;padding:8px 12px;margin:0 0 10px;background:#fff}.table-wrap td{display:grid;grid-template-columns:105px 1fr;align-items:center;gap:10px;padding:5px 0;border:0;text-align:left}.table-wrap td::before{font-size:12px;color:var(--muted);font-weight:600}.table-wrap td:nth-child(1)::before{content:'序号'}.table-wrap td:nth-child(2)::before{content:'产品系列 / 类型'}.table-wrap td:nth-child(3)::before{content:'壁厚'}.table-wrap td:nth-child(4)::before{content:'宽度 (mm)'}.table-wrap td:nth-child(5)::before{content:'高度 (mm)'}.table-wrap td:nth-child(6)::before{content:'数量'}.table-wrap td:nth-child(7)::before{content:'实际面积 (m²)'}.table-wrap td:nth-child(8)::before{content:'起算面积 (m²)'}.table-wrap td:nth-child(9)::before{content:'计价面积 (m²)'}.table-wrap td:nth-child(10)::before{content:'基准价'}.table-wrap td:nth-child(11)::before{content:'普通增配'}.table-wrap td:nth-child(12)::before{content:'包装附加费'}.table-wrap td:nth-child(13)::before{content:'调整单价'}.table-wrap td:nth-child(14)::before{content:'每樘金额'}.table-wrap td:nth-child(15)::before{content:'金额'}.table-wrap td:nth-child(16)::before{content:'备注'}.table-wrap td select,.table-wrap td input{min-height:42px;font-size:16px}.table-wrap td.num{justify-items:end}.table-wrap td.line-total{font-size:18px}.table-wrap td:last-child{justify-items:end}.total .amount{font-size:29px}}
+  </style>
+</head>
+<body>
+<main class="wrap">
+  <header>
+    <div><h1>德尔堡 UPVC 门窗报价工具</h1><p>基准价：白色高耐候 · 出厂价（不含运输和包装） · 有效期至 2026 年 12 月 31 日</p></div>
+    <div class="actions"><button class="secondary" onclick="window.print()">打印 / 保存 PDF</button><button onclick="exportExcel()">导出 Excel 表格</button></div>
+  </header>
+
+  <section class="card meta">
+    <div class="field"><label>客户名称</label><input id="customer" placeholder="例如：ABC Windows" oninput="save()"></div>
+    <div class="field"><label>报价编号</label><input id="quoteNo" placeholder="自动生成" oninput="save()"></div>
+    <div class="field"><label>报价日期</label><input id="quoteDate" type="date" oninput="save()"></div>
+    <div class="field"><label>备注</label><input id="projectNote" placeholder="项目名称、贸易条款等" oninput="save()"></div>
+  </section>
+
+  <section class="card">
+    <div class="toolbar"><h2>报价明细</h2><button class="secondary" onclick="addLine()">+ 新增一行</button></div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>#</th><th>产品系列 / 类型</th><th>壁厚</th><th>宽(mm)</th><th>高(mm)</th><th>数量</th><th>实际面积(m²)</th><th>起算面积</th><th>计价面积(m²)</th><th>基准价</th><th>普通增配</th><th>包装附加费</th><th>调整单价</th><th>每樘金额</th><th>金额（元）</th><th>备注</th><th></th></tr></thead>
+        <tbody id="lines"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="summary">
+    <div class="card notes">
+      <h3>报价说明</h3>
+      <ul>
+        <li>计价面积 = 单樘实际面积与该产品起算面积取较大值，再乘数量。</li>
+        <li>增配项目按每平方米计入；通体黑色需 100m² 以上起订，小于起订量另计改色费。</li>
+        <li>默认均为双玻；美式系列玻璃为 4mm。运输、包装、特殊配置请在备注中另行确认。</li>
+      </ul>
+      <p class="footer-note">本工具依据《佛山德尔堡 UPVC 价格表》制作，仅作快速报价参考；最终价格请以双方确认的配置及订单为准。</p>
+    </div>
+    <aside class="total">
+      <div class="label">报价合计</div><div class="amount" id="grandTotal">¥0.00</div>
+      <div class="total-row"><span>计价总面积</span><strong id="totalArea">0.00 m²</strong></div>
+      <div class="total-row"><span>明细合计</span><strong id="subtotal">¥0.00</strong></div>
+    </aside>
+  </section>
+</main>
+
+<script>
+const products=[
+ ['60系列','固定窗',220,1,'2.2mm'],['60系列','平开窗',340,1,'2.2mm'],['60系列','平开门',440,1.7,'2.2mm'],
+ ['62系列','两轨推拉窗',305,1,'2.2mm'],['62系列','两轨推拉门',360,2.8,'2.2mm'],
+ ['80系列','三轨推拉窗',320,1,'2.2mm'],['88系列','三轨推拉门',385,2.8,'2.2mm'],
+ ['112系列','三轨推拉门',435,2.8,'2.2mm'],['70欧式','内开窗',400,1.5,'2.8mm'],
+ ['82欧式','内开窗',430,1.5,'2.8mm'],['82美式','单提拉',450,1,'1.5mm'],
+ ['82美式','单推拉',350,1,'1.5mm'],['82美式','固定窗',260,1,'1.5mm'],
+ ['82美式','双提拉',550,1,'1.9mm'],['82美式','摇臂外开窗',800,1,'1.9mm'],
+ ['130美式','推拉门',460,2.8,'2.0mm']
+];
+const extras=[['无增配',0],['Low-e',40],['双银 Low-e',80],['美式格条',30],['内开内倒',120],['美标双玻（U=0.3）',120],['通体黑色',30],['外覆膜',60]];
+const packages=[['无包装附加费',0],['木架',35],['木箱',60]];
+const productOptions=products.map((p,i)=>`<option value="${i}">${p[0]} · ${p[1]}（¥${p[2]}/m²）</option>`).join('');
+const extraOptions=extras.map((e,i)=>`<option value="${i}">${e[0]}${e[1]?` +¥${e[1]}`:''}</option>`).join('');
+const packageOptions=packages.map((e,i)=>`<option value="${i}">${e[0]}${e[1]?` +¥${e[1]}`:''}</option>`).join('');
+let rows=[];
+
+function blank(){return {p:1,w:'',h:'',q:1,e:0,pkg:0,adjust:'',note:''}}
+function addLine(data=blank()){rows.push(data);render();save()}
+
+function render(){
+  const tbody=document.getElementById('lines');
+  tbody.innerHTML=rows.map((r,i)=>{
+    const p=products[r.p];
+    const actual=(+r.w||0)*(+r.h||0)/1000000;
+    const oneArea=Math.max(actual,p[3]);
+    const area=oneArea*(+r.q||0);
+    const unit=r.adjust!==''?(+r.adjust||0):p[2]+extras[r.e][1]+packages[r.pkg||0][1];
+    const oneAmount=oneArea*unit,amount=area*unit;
+    return `<tr>
+      <td>${i+1}</td>
+      <td><select onchange="changeRow(${i},'p',this.value)">${productOptions.replace(`value="${r.p}"`,`value="${r.p}" selected`)}</select></td>
+      <td class="num">${p[4]}</td>
+      <td><input type="text" inputmode="numeric" placeholder="直接输入宽度" value="${r.w}" oninput="editDimension(${i},'w',this.value)" onblur="render()"></td>
+      <td><input type="text" inputmode="numeric" placeholder="直接输入高度" value="${r.h}" oninput="editDimension(${i},'h',this.value)" onblur="render()"></td>
+      <td><input type="number" min="1" value="${r.q}" oninput="editQuantity(${i},this.value)" onblur="render()"></td>
+      <td class="num">${actual.toFixed(2)}</td><td class="num">${p[3].toFixed(2)}</td><td class="num">${area.toFixed(2)}</td>
+      <td class="num">¥${p[2].toFixed(2)}</td>
+      <td><select onchange="changeRow(${i},'e',this.value)">${extraOptions.replace(`value="${r.e}"`,`value="${r.e}" selected`)}</select></td>
+      <td><select onchange="changeRow(${i},'pkg',this.value)">${packageOptions.replace(`value="${r.pkg||0}"`,`value="${r.pkg||0}" selected`)}</select></td>
+      <td><input type="number" min="0" placeholder="自动" value="${r.adjust}" oninput="changeRow(${i},'adjust',this.value)"></td>
+      <td class="num">¥${oneAmount.toFixed(2)}</td><td class="num line-total">¥${amount.toFixed(2)}</td>
+      <td><input placeholder="位置 / 说明" value="${r.note}" oninput="changeRow(${i},'note',this.value)"></td>
+      <td><button class="delete" onclick="removeLine(${i})">删除</button></td>
+    </tr>`;
+  }).join('');
+  recalc(false);
+}
+function changeRow(i,key,value){rows[i][key]=['p','e','pkg'].includes(key)?+value:value;render();save()}
+function editDimension(i,key,value){rows[i][key]=value;recalc();save()}
+function editQuantity(i,value){rows[i].q=value;recalc();save()}
+function removeLine(i){rows.splice(i,1);render();save()}
+
+function recalc(shouldSave=true){
+  let area=0,sub=0;
+  rows.forEach(r=>{
+    const p=products[r.p];
+    const a=Math.max((+r.w||0)*(+r.h||0)/1e6,p[3])*(+r.q||0);
+    const u=r.adjust!==''?(+r.adjust||0):p[2]+extras[r.e][1]+packages[r.pkg||0][1];
+    area+=a;sub+=a*u;
+  });
+  totalArea.textContent=area.toFixed(2)+' m²';
+  subtotal.textContent='¥'+sub.toFixed(2);
+  grandTotal.textContent='¥'+sub.toFixed(2);
+  if(shouldSave)save();
+}
+function save(){localStorage.setItem('derboQuote',JSON.stringify({rows,customer:customer.value,quoteNo:quoteNo.value,quoteDate:quoteDate.value,projectNote:projectNote.value}))}
+function load(){
+  const s=JSON.parse(localStorage.getItem('derboQuote')||'null');
+  if(s){rows=s.rows||[];customer.value=s.customer||'';quoteNo.value=s.quoteNo||'';quoteDate.value=s.quoteDate||'';projectNote.value=s.projectNote||''}
+  else{rows=[blank()];quoteDate.value=new Date().toISOString().slice(0,10);quoteNo.value='DB-'+new Date().toISOString().slice(0,10).replaceAll('-','')}
+  render();
+}
+function exportExcel(){
+  const esc=s=>`<td>${String(s??'').replaceAll('&','&amp;').replaceAll('<','&lt;')}</td>`;
+  let sum=0,areaSum=0;
+  const data=rows.map((r,i)=>{
+    const p=products[r.p],actual=(+r.w||0)*(+r.h||0)/1e6,oneArea=Math.max(actual,p[3]),area=oneArea*(+r.q||0);
+    const unit=r.adjust!==''?(+r.adjust||0):p[2]+extras[r.e][1]+packages[r.pkg||0][1],oneAmount=oneArea*unit,money=area*unit;
+    sum+=money;areaSum+=area;
+    return `<tr>${[i+1,p[0],p[1],p[4],r.w,r.h,r.q,actual.toFixed(2),p[3],area.toFixed(2),p[2],extras[r.e][0],packages[r.pkg||0][0],unit.toFixed(2),oneAmount.toFixed(2),money.toFixed(2),r.note].map(esc).join('')}</tr>`;
+  }).join('');
+  const html=`<html><meta charset="utf-8"><table border="1"><tr><th colspan="17">德尔堡 UPVC 门窗报价单</th></tr><tr><td>客户</td>${esc(customer.value)}<td>报价编号</td>${esc(quoteNo.value)}<td>日期</td>${esc(quoteDate.value)}<td>备注</td>${esc(projectNote.value)}</tr><tr><th>序号</th><th>系列</th><th>类型</th><th>壁厚</th><th>宽(mm)</th><th>高(mm)</th><th>数量</th><th>实际面积</th><th>起算面积</th><th>计价面积</th><th>基准价</th><th>普通增配</th><th>包装附加费</th><th>单价</th><th>每樘金额</th><th>金额</th><th>备注</th></tr>${data}<tr><td colspan="9">合计</td><td>${areaSum.toFixed(2)}</td><td colspan="5"></td><td>${sum.toFixed(2)}</td><td></td></tr></table></html>`;
+  const blob=new Blob(['\ufeff'+html],{type:'application/vnd.ms-excel;charset=utf-8'}),a=document.createElement('a');
+  a.href=URL.createObjectURL(blob);a.download=(quoteNo.value||'德尔堡UPVC报价')+'.xls';a.click();URL.revokeObjectURL(a.href);
+}
+load();
+</script>
+</body>
+</html>
+```
